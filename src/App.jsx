@@ -5,6 +5,7 @@ import RedFlags from './components/RedFlags.jsx'
 import Faqs from './components/Faqs.jsx'
 import FeedingPlan from './components/FeedingPlan.jsx'
 import ClinicInfo from './components/ClinicInfo.jsx'
+import VisitJournal from './components/VisitJournal.jsx'
 import { stageForWeek, approvedSources } from './data/content.js'
 import { trimesterLabel, weeksToGo } from './lib/pregnancy.js'
 
@@ -114,6 +115,7 @@ function Dashboard({ gestation, postpartum, setPostpartum, onReset }) {
         </ul>
       </section>
 
+      <VisitJournal gestation={gestation} postpartum={postpartum} />
       <FeedingPlan />
       <Faqs />
       <ClinicInfo />

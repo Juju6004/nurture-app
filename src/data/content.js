@@ -355,6 +355,90 @@ export const redFlags = {
   ],
 }
 
+// "My Visits" journal — the digital version of the Caring for Motherhood
+// fill-in visit pages (ETSU Health / ReadNPlay). Each visit type carries the
+// intro line + the book's "questions to ask this visit" as tappable
+// suggestions. The app improves on paper by auto-selecting the right visit
+// for the mom's current trimester and saving everything on her phone.
+export const visitTypes = [
+  {
+    id: 'tri1',
+    title: 'My 1st Trimester Visit',
+    accent: 'violet',
+    minWeek: 0,
+    maxWeek: 13,
+    intro: 'The first 13.6 weeks of pregnancy is the 1st trimester.',
+    tip: 'Be sure to continue taking prenatal vitamins daily.',
+    suggestedQuestions: [
+      'Smoking, alcohol, or drug use? Ask my provider for help with quitting.',
+      'How I plan to tell family and friends about my pregnancy.',
+      'Which prenatal vitamin should I take?',
+    ],
+  },
+  {
+    id: 'tri2',
+    title: 'My 2nd Trimester Visit',
+    accent: 'amber',
+    minWeek: 14,
+    maxWeek: 27,
+    intro: "By the end of the 2nd trimester your baby's organs will all have developed.",
+    tip: 'Uncomfortable symptoms of pregnancy often improve during the 2nd trimester.',
+    suggestedQuestions: [
+      'How I want to feed my baby + questions I have about breastfeeding.',
+      'Smoking, alcohol, or drug use? Ask for help quitting.',
+      'What to expect from the anatomy ultrasound and glucose screening.',
+    ],
+  },
+  {
+    id: 'tri3',
+    title: 'My 3rd Trimester Visit',
+    accent: 'rose',
+    minWeek: 28,
+    maxWeek: 45,
+    intro: 'The third trimester is defined as 28+ weeks to term.',
+    tip: 'This is often called the “showing and glowing” period.',
+    suggestedQuestions: [
+      'My preferences for family planning and birth control.',
+      'Help completing any maternity-leave paperwork.',
+      'My birth and feeding plan.',
+    ],
+  },
+  {
+    id: 'post',
+    title: 'My Post-Delivery Visit',
+    accent: 'teal',
+    minWeek: 41,
+    maxWeek: 99,
+    intro: 'Your postpartum checkups are just as important as your newborn’s visits.',
+    tip: "It's time just for you to discuss concerns or challenges and ask questions.",
+    suggestedQuestions: [
+      'My activity and nutrition plan.',
+      'Sexual activity guidelines, family planning, birth control.',
+      'How I’m feeling emotionally (mood / baby blues).',
+    ],
+  },
+]
+
+// The measured fields a mom logs at each visit (mirrors the book's vitals row).
+export const visitFields = [
+  { key: 'date', label: 'Appointment date', type: 'date' },
+  { key: 'weight', label: 'Weight today', type: 'text', placeholder: 'e.g. 150 lb' },
+  { key: 'bp', label: 'Blood pressure', type: 'text', placeholder: 'e.g. 118/72' },
+  { key: 'pulse', label: 'Pulse', type: 'text', placeholder: 'e.g. 78' },
+  { key: 'babyHr', label: "Baby's heart rate", type: 'text', placeholder: 'e.g. 150' },
+  { key: 'fundalHeight', label: 'Fundal height', type: 'text', placeholder: 'e.g. 24 cm' },
+  { key: 'testResults', label: 'Any new test results', type: 'textarea' },
+  { key: 'meds', label: 'Current vitamins or medications', type: 'textarea' },
+]
+
+export function visitTypeForWeek(weeks, isPostpartum = false) {
+  if (isPostpartum) return visitTypes.find((v) => v.id === 'post')
+  return (
+    visitTypes.find((v) => v.id !== 'post' && weeks >= v.minWeek && weeks <= v.maxWeek) ||
+    visitTypes[0]
+  )
+}
+
 // Clinic contact card. Office info only — intentionally NOT framed as on-call
 // access to a specific person. Fill `hours` once confirmed with the office.
 export const clinic = {
