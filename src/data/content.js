@@ -69,6 +69,17 @@ const S = {
     year: 2024,
     url: 'https://medlineplus.gov/ency/patientinstructions/000486.htm',
   },
+  aapSafeSleep: {
+    name: 'AAP — Safe sleep (2022 policy)',
+    year: 2022,
+    url: 'https://www.healthychildren.org/English/ages-stages/baby/sleep/Pages/A-Parents-Guide-to-Safe-Sleep.aspx',
+  },
+  // The ETSU journal itself — used for its own program/resource framing (not a
+  // scientific claim source). Medical claims still carry a peer-reviewed/agency cite.
+  book: {
+    name: 'ETSU Health — Caring for Motherhood journal',
+    url: 'https://www.etsuhealth.org/services/pediatrics/caring_for_motherhood.php',
+  },
 }
 
 // Stage-based content. `minWeek`/`maxWeek` are inclusive gestational-week
@@ -354,6 +365,145 @@ export const redFlags = {
     },
   ],
 }
+
+// The six "Caring for…" wellness sections — the heart of the Caring for
+// Motherhood journal. Each item uses the same {topic, detail, source} shape as
+// the rest of the app, so medical claims show their citation and anything
+// unsourced shows a "pending clinical sourcing" badge.
+export const caringSections = [
+  {
+    id: 'health',
+    title: 'Caring for your health',
+    icon: '🩺',
+    accent: 'rose',
+    intro: 'Taking care of your body before, during, and after pregnancy.',
+    items: [
+      {
+        topic: 'Healthy eating — the 5210 goal',
+        detail:
+          'A simple daily target: 5 fruits & veggies, no more than 2 hours of recreational screen time, 1 hour of activity, and 0 sugary drinks.',
+        source: S.book,
+      },
+      {
+        topic: 'Take a prenatal vitamin every day',
+        detail:
+          "Start as soon as you know you're pregnant and keep taking it daily through pregnancy and while breastfeeding.",
+        source: S.book,
+      },
+      {
+        topic: 'Recovering after birth',
+        detail:
+          'Recovery usually takes about 6–8 weeks. Bleeding (lochia) is heavy and bright red at first, then lightens and tapers over a few weeks.',
+        source: S.owhRecovery,
+      },
+    ],
+  },
+  {
+    id: 'mind',
+    title: 'Caring for your mind',
+    icon: '🌿',
+    accent: 'violet',
+    intro: 'Pregnancy and after birth are common times to feel down or anxious — support helps.',
+    items: [
+      {
+        topic: 'Baby blues vs. when to get help',
+        detail:
+          "Feeling sad or overwhelmed for a few days after birth is normal and usually passes. If it lasts more than two weeks, see your doctor — don't wait for your postpartum visit.",
+        source: S.owhRecovery,
+      },
+      {
+        topic: 'Behavioral health is part of your care',
+        detail:
+          'ETSU Health clinics have behavioral health consultants who can support you during pregnancy and after delivery — often right in clinic at your regular visits.',
+        source: S.book,
+      },
+    ],
+  },
+  {
+    id: 'yourself',
+    title: 'Caring for yourself',
+    icon: '🛁',
+    accent: 'teal',
+    intro: 'Small things that keep you healthy — for you and your baby.',
+    items: [
+      {
+        topic: 'Store medicines safely',
+        detail: 'Keep all medications stored safely and out of reach, especially with a baby in the home.',
+        source: S.book,
+      },
+      {
+        topic: 'Quitting tobacco, alcohol, or other substances',
+        detail:
+          "If you want help quitting, you're not alone. See Resources for free quit lines and local support — and ask your provider.",
+        source: S.book,
+      },
+    ],
+  },
+  {
+    id: 'baby',
+    title: 'Caring for your baby',
+    icon: '🍼',
+    accent: 'amber',
+    intro: "The basics for your newborn's first weeks.",
+    items: [
+      {
+        topic: 'Safe sleep — the ABCs',
+        detail:
+          'Babies sleep safest Alone, on their Back, in a Crib or bassinet on a firm, flat surface — no pillows, blankets, bumpers, or toys. Keep baby in your room (not your bed) for at least the first 6 months.',
+        source: S.aapSafeSleep,
+      },
+      {
+        topic: 'Feeding your newborn',
+        detail:
+          "Newborns feed at least 8–12 times a day. See “Getting ready to breastfeed” and “My feeding plan” for the details.",
+        source: S.aapEnough,
+      },
+      {
+        topic: 'Well-baby visits & tummy time',
+        detail:
+          'Keep all well-baby checkups and vaccines, and give daily supervised tummy time while baby is awake.',
+        source: S.aapSafeSleep,
+      },
+    ],
+  },
+  {
+    id: 'safety',
+    title: 'Caring for your safety',
+    icon: '🛟',
+    accent: 'leaf',
+    intro: 'Keeping you and baby safe at home and on the go.',
+    items: [
+      { topic: 'Use a properly installed, rear-facing car seat', detail: null, source: null },
+      {
+        topic: 'Know the urgent warning signs',
+        detail:
+          'See “When to call your provider” for the signs that need a call right away — during pregnancy and after birth.',
+        source: S.cdcHearHer,
+      },
+    ],
+  },
+  {
+    id: 'finances',
+    title: 'Caring for your finances',
+    icon: '💵',
+    accent: 'rose',
+    intro: "Programs and help so cost isn't a barrier.",
+    items: [
+      {
+        topic: 'Lactation visits are covered',
+        detail:
+          'TennCare/CoverKids cover lactation consults with no limit on visits; other plans and self-pay are accepted too.',
+        source: S.book,
+      },
+      {
+        topic: 'Find local help',
+        detail:
+          '211 connects you to food, housing, and utility help, and WIC supports nutrition for pregnant women and young children. See Resources to get connected.',
+        source: S.book,
+      },
+    ],
+  },
+]
 
 // "My Visits" journal — the digital version of the Caring for Motherhood
 // fill-in visit pages (ETSU Health / ReadNPlay). Each visit type carries the

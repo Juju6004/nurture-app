@@ -7,60 +7,131 @@ import FeedingPlan from './components/FeedingPlan.jsx'
 import ClinicInfo from './components/ClinicInfo.jsx'
 import Resources from './components/Resources.jsx'
 import VisitJournal from './components/VisitJournal.jsx'
+import CaringSections from './components/CaringSections.jsx'
 import SectionCard from './components/SectionCard.jsx'
 import { BloomMark, Wordmark } from './components/Logo.jsx'
 import { stageForWeek, approvedSources } from './data/content.js'
 import { trimesterLabel, weeksToGo } from './lib/pregnancy.js'
 
+const TABS = [
+  { id: 'today', label: 'Today', icon: '🌷' },
+  { id: 'caring', label: 'Caring', icon: '🌿' },
+  { id: 'visits', label: 'My visits', icon: '🗓️' },
+  { id: 'support', label: 'Support', icon: '🤝' },
+]
+
 export default function App() {
   const [gestation, setGestation] = useState(null)
   const [postpartum, setPostpartum] = useState(false)
+  const [tab, setTab] = useState('today')
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-[#fdeef2] via-[#fffaf4] to-[#fff6ee] text-stone-700">
-      <div className="mx-auto max-w-md px-4 pb-16 pt-9">
-        <header className="mb-7 text-center">
-          <div className="flex justify-center">
-            <Wordmark size={42} />
-          </div>
-          <p className="font-hand mt-1 text-xl text-[var(--bloom)]">
-            for this journey called motherhood
-          </p>
-          <p className="mt-2 text-sm text-stone-500">
-            What to feel, how to prepare to feed, and when to call — for where you are right
-            now.
-          </p>
-        </header>
-
-        {!gestation ? (
+  // Before a due date is set, show the welcome + setup screen.
+  if (!gestation) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#fdeef2] via-[#fffaf4] to-[#fff6ee] text-stone-700">
+        <div className="mx-auto max-w-md px-4 pb-16 pt-9">
+          <Hero />
           <DueDateInput
             onResolve={(g) => {
               setGestation(g)
               setPostpartum(false)
+              setTab('today')
             }}
           />
-        ) : (
-          <Dashboard
+          <Disclaimer />
+        </div>
+      </div>
+    )
+  }
+
+  const shortTri = postpartum ? 'Postpartum' : `Wk ${gestation.weeks} · ${shortTrimester(gestation.trimester)}`
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-[#fdeef2] via-[#fffaf4] to-[#fff6ee] text-stone-700">
+      {/* Sticky top bar */}
+      <header className="sticky top-0 z-10 border-b border-rose-100/70 bg-[#fff7f1]/85 backdrop-blur">
+        <div className="mx-auto flex max-w-md items-center justify-between px-4 py-2.5">
+          <div className="flex items-center gap-2">
+            <BloomMark size={26} />
+            <span className="font-display text-xl font-semibold text-[var(--bloom-deep)]">
+              Nurture
+            </span>
+          </div>
+          <span className="rounded-full bg-rose-100/70 px-3 py-1 text-xs font-semibold text-rose-700">
+            {shortTri}
+          </span>
+        </div>
+      </header>
+
+      {/* Tab content */}
+      <main className="mx-auto w-full max-w-md px-4 pb-28 pt-5">
+        {tab === 'today' && (
+          <Today
             gestation={gestation}
             postpartum={postpartum}
             setPostpartum={setPostpartum}
             onReset={() => setGestation(null)}
           />
         )}
+        {tab === 'caring' && <CaringSections />}
+        {tab === 'visits' && (
+          <div className="space-y-5">
+            <VisitJournal gestation={gestation} postpartum={postpartum} />
+            <FeedingPlan />
+          </div>
+        )}
+        {tab === 'support' && (
+          <div className="space-y-5">
+            <ClinicInfo />
+            <Resources />
+            <Faqs />
+            <RedFlags />
+            <Disclaimer />
+          </div>
+        )}
+      </main>
 
-        <footer className="mt-10 border-t border-rose-100 pt-5 text-center text-xs text-stone-400">
-          <p>
-            Educational companion only — not medical advice, and not a substitute for your
-            care team.
-          </p>
-          <p className="mt-1">Clinical content sourced from: {approvedSources.join(' · ')}.</p>
-        </footer>
-      </div>
+      {/* Bottom tab bar */}
+      <nav className="fixed inset-x-0 bottom-0 z-10 border-t border-rose-100 bg-white/90 backdrop-blur">
+        <div className="mx-auto flex max-w-md">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={
+                'flex flex-1 flex-col items-center gap-0.5 py-2.5 text-xs font-medium transition ' +
+                (tab === t.id ? 'text-[var(--bloom)]' : 'text-stone-400 hover:text-stone-600')
+              }
+            >
+              <span className="text-lg" aria-hidden>
+                {t.icon}
+              </span>
+              {t.label}
+            </button>
+          ))}
+        </div>
+      </nav>
     </div>
   )
 }
 
-function Dashboard({ gestation, postpartum, setPostpartum, onReset }) {
+function Hero() {
+  return (
+    <header className="mb-7 text-center">
+      <div className="flex justify-center">
+        <Wordmark size={42} />
+      </div>
+      <p className="font-hand mt-1 text-xl text-[var(--bloom)]">
+        for this journey called motherhood
+      </p>
+      <p className="mt-2 text-sm text-stone-500">
+        What to feel, how to prepare to feed, and when to call — for where you are right now.
+      </p>
+    </header>
+  )
+}
+
+function Today({ gestation, postpartum, setPostpartum, onReset }) {
   const stage = stageForWeek(gestation.weeks, postpartum)
 
   return (
@@ -127,13 +198,22 @@ function Dashboard({ gestation, postpartum, setPostpartum, onReset }) {
           ))}
         </ul>
       </SectionCard>
-
-      <VisitJournal gestation={gestation} postpartum={postpartum} />
-      <FeedingPlan />
-      <Faqs />
-      <ClinicInfo />
-      <Resources />
-      <RedFlags />
     </div>
   )
+}
+
+function Disclaimer() {
+  return (
+    <footer className="mt-10 border-t border-rose-100 pt-5 text-center text-xs text-stone-400">
+      <p>
+        Educational companion only — not medical advice, and not a substitute for your care
+        team.
+      </p>
+      <p className="mt-1">Clinical content sourced from: {approvedSources.join(' · ')}.</p>
+    </footer>
+  )
+}
+
+function shortTrimester(t) {
+  return { 1: '1st tri', 2: '2nd tri', 3: '3rd tri' }[t] || ''
 }
