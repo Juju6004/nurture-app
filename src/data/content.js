@@ -454,6 +454,80 @@ export const clinic = {
     'TennCare/CoverKids cover lactation consults with no limit on the number of visits; other plans and self-pay accepted.',
 }
 
+// Local resource directory — the phone/web list from the Caring for Motherhood
+// journal (ETSU Health), as tap-to-call links. These are contact resources, not
+// medical claims, so they carry no scientific citation; sourced from the ETSU
+// Caring for Motherhood resource pages.
+export const resourceGroups = [
+  {
+    category: 'Breastfeeding & feeding',
+    items: [
+      { name: 'TN Breastfeeding Hotline', phone: '1-855-423-6667', phoneHref: 'tel:+18554236667' },
+      {
+        name: 'VA Dept. of Health Breastfeeding Hotline',
+        phone: '1-877-275-8343',
+        phoneHref: 'tel:+18772758343',
+      },
+      {
+        name: 'La Leche League — Mountain Empire',
+        desc: 'Free peer breastfeeding support',
+        web: 'https://lllmountainempire.org',
+      },
+    ],
+  },
+  {
+    category: 'Your health & quitting',
+    items: [
+      {
+        name: 'Quit smoking — 1-800-QUIT-NOW',
+        phone: '1-800-784-8669',
+        phoneHref: 'tel:+18007848669',
+      },
+      {
+        name: 'Ballad STRONG cessation',
+        desc: 'Help quitting smoking/vaping in pregnancy',
+        web: 'mailto:strongcessation@balladhealth.org',
+      },
+      { name: 'MyPlate — healthy eating', desc: 'Tools, tips, recipes', web: 'https://www.myplate.gov' },
+    ],
+  },
+  {
+    category: 'Support & navigation',
+    items: [
+      {
+        name: 'Ballad Nurse Connect',
+        desc: 'Talk to a nurse any time (24/7)',
+        phone: '1-833-822-5523',
+        phoneHref: 'tel:+18338225523',
+      },
+      {
+        name: 'Nurse-Family Partnership',
+        desc: 'Home visits for first-time moms',
+        phone: '1-423-900-3160',
+        phoneHref: 'tel:+14239003160',
+      },
+      {
+        name: '211 — find local help',
+        desc: 'Food, housing, utilities & more',
+        phone: '211',
+        phoneHref: 'tel:211',
+        web: 'https://contact211netn.org',
+      },
+      {
+        name: 'CHANT — TN care navigation',
+        desc: 'Coordinates medical + social needs',
+        phone: '1-615-532-8192',
+        phoneHref: 'tel:+16155328192',
+      },
+      {
+        name: 'Tennessee Early Intervention',
+        phone: '1-800-852-7157',
+        phoneHref: 'tel:+18008527157',
+      },
+    ],
+  },
+]
+
 // Source allowlist surfaced in the UI footer so the standard is visible.
 export const approvedSources = [
   'ACOG',

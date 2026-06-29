@@ -5,6 +5,7 @@ import RedFlags from './components/RedFlags.jsx'
 import Faqs from './components/Faqs.jsx'
 import FeedingPlan from './components/FeedingPlan.jsx'
 import ClinicInfo from './components/ClinicInfo.jsx'
+import Resources from './components/Resources.jsx'
 import VisitJournal from './components/VisitJournal.jsx'
 import SectionCard from './components/SectionCard.jsx'
 import { BloomMark, Wordmark } from './components/Logo.jsx'
@@ -131,6 +132,7 @@ function Dashboard({ gestation, postpartum, setPostpartum, onReset }) {
       <FeedingPlan />
       <Faqs />
       <ClinicInfo />
+      <Resources />
       <RedFlags />
     </div>
   )
