@@ -3,6 +3,8 @@ import DueDateInput from './components/DueDateInput.jsx'
 import ContentItem from './components/ContentItem.jsx'
 import RedFlags from './components/RedFlags.jsx'
 import Faqs from './components/Faqs.jsx'
+import FeedingPlan from './components/FeedingPlan.jsx'
+import ClinicInfo from './components/ClinicInfo.jsx'
 import { stageForWeek, approvedSources } from './data/content.js'
 import { trimesterLabel, weeksToGo } from './lib/pregnancy.js'
 
@@ -112,7 +114,9 @@ function Dashboard({ gestation, postpartum, setPostpartum, onReset }) {
         </ul>
       </section>
 
+      <FeedingPlan />
       <Faqs />
+      <ClinicInfo />
       <RedFlags />
     </div>
   )

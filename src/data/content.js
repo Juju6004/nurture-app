@@ -355,6 +355,21 @@ export const redFlags = {
   ],
 }
 
+// Clinic contact card. Office info only — intentionally NOT framed as on-call
+// access to a specific person. Fill `hours` once confirmed with the office.
+export const clinic = {
+  name: 'ETSU Health — Regional Lactation Referral Center',
+  blurb:
+    'Prenatal and postpartum lactation consults with an IBCLC. OB patients are typically scheduled for a prenatal consult; others can call to schedule.',
+  phoneDisplay: '(423) 439-7272',
+  phoneHref: 'tel:+14234397272',
+  // TODO: confirm exact office hours with the clinic, then fill this string.
+  hours: null,
+  portalName: 'MyETSUHealth patient portal',
+  coverageNote:
+    'TennCare/CoverKids cover lactation consults with no limit on the number of visits; other plans and self-pay accepted.',
+}
+
 // Source allowlist surfaced in the UI footer so the standard is visible.
 export const approvedSources = [
   'ACOG',
