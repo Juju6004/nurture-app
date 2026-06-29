@@ -1,0 +1,16 @@
+{
+  "name": "Nurture — Pregnancy & Lactation Companion",
+  "short_name": "Nurture",
+  "description": "Your pregnancy & lactation companion — what to feel, how to prepare to feed, and when to call, for where you are right now.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff6ee",
+  "theme_color": "#c64f7b",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
