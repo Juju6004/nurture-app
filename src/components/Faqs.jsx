@@ -44,7 +44,15 @@ function FaqRow({ faq }) {
       {open && (
         <div className="px-4 pb-3">
           {answered ? (
-            <p className="text-sm leading-relaxed text-stone-600">{faq.answer}</p>
+            <>
+              <p className="text-sm leading-relaxed text-stone-600">{faq.answer}</p>
+              {faq.source && (
+                <p className="mt-2 text-xs text-stone-400">
+                  Source: {faq.source.name}
+                  {faq.source.year ? ` (${faq.source.year})` : ''}
+                </p>
+              )}
+            </>
           ) : (
             <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-700 ring-1 ring-amber-200">
               pending clinical sourcing

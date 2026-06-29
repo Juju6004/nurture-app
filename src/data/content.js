@@ -7,14 +7,49 @@
 // womenshealth.gov, Academy of Breastfeeding Medicine). Nothing here is filled
 // from memory.
 //
-// Each item below carries a `topic` (a safe, non-claim section label used for
-// navigation) and a `detail` (the actual guidance). While `detail` is null the
-// UI shows a "pending clinical sourcing" badge instead of inventing content.
-// To populate an item: write `detail` and fill `source` with {name, year, url}.
+// Each item carries a `topic` (a safe, non-claim section label used for
+// navigation), a `detail` (the actual guidance), and a `source`
+// {name, year, url}. While `detail` is null the UI shows a "pending clinical
+// sourcing" badge instead of inventing content.
+//
+// ACCESS GAP (flagged per the project's sourcing standard):
+//   The ACOG article "How to Prepare for Breastfeeding in the Month Before
+//   Birth" returned HTTP 402 (paywalled) on fetch 2026-06-29. Antenatal
+//   hand-expression / colostrum-harvesting guidance is therefore left pending
+//   until an accessible ACOG (or equivalent) source is read directly.
 // ---------------------------------------------------------------------------
 
 /** @typedef {{ name: string, year?: number, url?: string }} Source */
 /** @typedef {{ topic: string, detail: string|null, source: Source|null }} Item */
+
+// Sources actually read while populating this file (each fetched directly).
+const S = {
+  owhMilk: {
+    name: "Office on Women's Health — Making breastmilk",
+    year: 2025,
+    url: 'https://womenshealth.gov/breastfeeding/learning-breastfeed/making-breastmilk',
+  },
+  owhChallenges: {
+    name: "Office on Women's Health — Common breastfeeding challenges",
+    year: 2025,
+    url: 'https://womenshealth.gov/breastfeeding/breastfeeding-challenges/common-breastfeeding-challenges',
+  },
+  owhStages: {
+    name: "Office on Women's Health — Stages of pregnancy",
+    year: 2025,
+    url: 'https://womenshealth.gov/pregnancy/youre-pregnant-now-what/stages-pregnancy',
+  },
+  aapEnough: {
+    name: 'AAP HealthyChildren — Signs a breastfed baby is getting enough',
+    year: 2025,
+    url: 'https://www.healthychildren.org/English/ages-stages/baby/breastfeeding/Pages/How-to-Tell-if-Baby-is-Getting-Enough-Milk.aspx',
+  },
+  cdcHearHer: {
+    name: 'CDC HEAR HER — Urgent maternal warning signs',
+    year: 2024,
+    url: 'https://www.cdc.gov/hearher/maternal-warning-signs/index.html',
+  },
+}
 
 // Stage-based content. `minWeek`/`maxWeek` are inclusive gestational-week
 // bounds; the app picks the stage whose range contains the current week.
@@ -25,12 +60,31 @@ export const stages = [
     minWeek: 0,
     maxWeek: 13,
     feeling: [
-      { topic: 'Common early symptoms (nausea, fatigue, breast tenderness)', detail: null, source: null },
-      { topic: 'What is normal vs. worth a call this trimester', detail: null, source: null },
+      {
+        topic: 'Common early symptoms (nausea, fatigue, breast tenderness)',
+        detail:
+          'Hormonal changes affect almost every organ system. Common now: extreme tiredness, tender/swollen breasts, and an upset stomach with or without throwing up (morning sickness) — plus mood swings, constipation, and needing to pee more often.',
+        source: S.owhStages,
+      },
+      {
+        topic: 'What is normal vs. worth a call this trimester',
+        detail:
+          "Most early symptoms are normal. But call your provider for vaginal bleeding that's more than spotting, severe belly pain that doesn't go away, a fever of 100.4°F (38°C) or higher, or vomiting so bad you can't keep fluids down for more than 8 hours. (See “When to call your provider” below.)",
+        source: S.cdcHearHer,
+      },
     ],
     lactation: [
-      { topic: 'Early breast changes in pregnancy', detail: null, source: null },
-      { topic: 'It is okay to start thinking about a feeding plan — no action needed yet', detail: null, source: null },
+      {
+        topic: 'Early breast changes in pregnancy',
+        detail:
+          'Your breasts start getting ready to make milk early on — tenderness and fullness are common. Your body makes colostrum (a rich, thick, yellowish first milk) in small amounts.',
+        source: S.owhMilk,
+      },
+      {
+        topic: 'It is okay to start thinking about a feeding plan — no action needed yet',
+        detail: null,
+        source: null,
+      },
     ],
   },
   {
@@ -39,12 +93,31 @@ export const stages = [
     minWeek: 14,
     maxWeek: 27,
     feeling: [
-      { topic: 'What you may be feeling now (movement, energy, body changes)', detail: null, source: null },
-      { topic: 'Appointments/screens that cluster in this window', detail: null, source: null },
+      {
+        topic: 'What you may be feeling now (movement, energy, body changes)',
+        detail:
+          'Most women find the second trimester easier — nausea often fades. Body aches (back, abdomen, groin, thigh), stretch marks, and some swelling can show up. Before the trimester is over you will feel your baby begin to move; around 20 weeks you might feel slight fluttering.',
+        source: S.owhStages,
+      },
+      {
+        topic: 'Appointments/screens that cluster in this window',
+        detail: null,
+        source: null,
+      },
     ],
     lactation: [
-      { topic: 'Colostrum & what is happening in your breasts', detail: null, source: null },
-      { topic: 'Antenatal breastfeeding education — what to learn now', detail: null, source: null },
+      {
+        topic: 'Colostrum & what is happening in your breasts',
+        detail:
+          "Colostrum is the rich, thick, yellowish first milk. A newborn's stomach is tiny — about a hazelnut (1–2 teaspoons) — so your baby only takes about 1 teaspoon per feed. Over the next 3–5 days after birth, mature (white) milk takes the place of colostrum.",
+        source: S.owhMilk,
+      },
+      {
+        topic: 'Antenatal breastfeeding education — what to learn now',
+        detail:
+          'A good time to learn what a deep latch looks like: the baby should take in the areola, not just the nipple. Getting the latch right is what keeps feeding comfortable.',
+        source: S.owhChallenges,
+      },
       { topic: 'Flat / inverted nipple check', detail: null, source: null },
       { topic: 'Starting to build your feeding plan', detail: null, source: null },
     ],
@@ -55,11 +128,21 @@ export const stages = [
     minWeek: 28,
     maxWeek: 45,
     feeling: [
-      { topic: 'Late-pregnancy symptoms & comfort', detail: null, source: null },
+      {
+        topic: 'Late-pregnancy symptoms & comfort',
+        detail:
+          'As the baby grows it presses on your organs, so shortness of breath and needing the bathroom more often are common late in pregnancy.',
+        source: S.owhStages,
+      },
       { topic: 'Signs of labor vs. false alarms', detail: null, source: null },
     ],
     lactation: [
-      { topic: 'Latch basics & positions to learn before birth', detail: null, source: null },
+      {
+        topic: 'Latch basics & positions to learn before birth',
+        detail:
+          'Learn the basics now: baby latches onto the areola (not just the nipple), and changing positions during feeds helps comfort. Practicing the idea before birth makes it less new once baby arrives.',
+        source: S.owhChallenges,
+      },
       { topic: 'Pump & supply prep — what (if anything) to get', detail: null, source: null },
       { topic: 'First-hour skin-to-skin & first feed: what to expect', detail: null, source: null },
       { topic: 'What to pack for feeding', detail: null, source: null },
@@ -76,41 +159,158 @@ export const stages = [
       { topic: 'Mood: baby blues vs. when to seek help', detail: null, source: null },
     ],
     lactation: [
-      { topic: 'Feeding frequency in the early days', detail: null, source: null },
-      { topic: 'Is baby getting enough? (wet & dirty diaper counts)', detail: null, source: null },
-      { topic: 'Engorgement — what helps', detail: null, source: null },
-      { topic: 'Sore nipples & latch troubleshooting', detail: null, source: null },
+      {
+        topic: 'Feeding frequency in the early days',
+        detail:
+          'Nurse at least 8 to 12 times every 24 hours in the early days. Newborns feed often — roughly every 1 to 3 hours — because their stomachs are small.',
+        source: S.aapEnough,
+      },
+      {
+        topic: 'Is baby getting enough? (wet & dirty diaper counts)',
+        detail:
+          'Good signs by 5–7 days old: 6 or more wet diapers a day with pale or nearly colorless urine, and at least 3–4 yellow, loose stools a day. Baby should seem satisfied for 1–3 hours between feeds and start regaining weight after the normal early dip (losing no more than 8–10% of birth weight). If you’re worried, call your pediatrician.',
+        source: S.aapEnough,
+      },
+      {
+        topic: 'Engorgement — what helps',
+        detail:
+          'When milk builds up your breasts can get very hard and painful, often around days 3–5. Breastfeed often, hand express or pump just enough to soften the breast before latching, use cold compresses between feeds, massage, and wear a supportive (not tight) bra.',
+        source: S.owhChallenges,
+      },
+      {
+        topic: 'Sore nipples & latch troubleshooting',
+        detail:
+          'Some tenderness early on is common and should ease once the latch is right (baby takes in the areola, not just the nipple). Changing positions helps; you can express a few drops of milk and gently rub it on the nipple, or let them air dry.',
+        source: S.owhChallenges,
+      },
     ],
   },
 ]
 
 // Lactation-focused FAQs. Same sourcing rule — `answer` stays null until sourced.
 export const faqs = [
-  { id: 'colostrum', category: 'Breastfeeding', question: 'What is colostrum and when does it come in?', answer: null, source: null },
-  { id: 'how-often', category: 'Breastfeeding', question: 'How often should a newborn breastfeed?', answer: null, source: null },
-  { id: 'enough', category: 'Breastfeeding', question: 'How do I know my baby is getting enough milk?', answer: null, source: null },
-  { id: 'prenatal-prep', category: 'Breastfeeding', question: 'Can I prepare for breastfeeding before the baby arrives?', answer: null, source: null },
-  { id: 'engorgement', category: 'Breastfeeding', question: 'My breasts are hard and painful — what do I do?', answer: null, source: null },
-  { id: 'when-call', category: 'Red flags', question: 'When should breastfeeding pain make me call someone?', answer: null, source: null },
+  {
+    id: 'colostrum',
+    category: 'Breastfeeding',
+    question: 'What is colostrum and when does it come in?',
+    answer:
+      "Colostrum is the rich, thick, yellowish first milk your body makes in small amounts, starting in pregnancy. A newborn's stomach is tiny (about a hazelnut, 1–2 teaspoons), so your baby only takes about 1 teaspoon per feed. Over the next 3–5 days it changes into mature white milk.",
+    source: S.owhMilk,
+  },
+  {
+    id: 'how-often',
+    category: 'Breastfeeding',
+    question: 'How often should a newborn breastfeed?',
+    answer:
+      'At least 8 to 12 times every 24 hours in the early days — roughly every 1 to 3 hours. Newborns feed often because their stomachs are small.',
+    source: S.aapEnough,
+  },
+  {
+    id: 'enough',
+    category: 'Breastfeeding',
+    question: 'How do I know my baby is getting enough milk?',
+    answer:
+      'By 5–7 days old: 6 or more wet diapers a day with pale/colorless urine, and at least 3–4 yellow loose stools a day. Baby seems satisfied for 1–3 hours between feeds and is gaining weight again after the early dip. If you’re unsure, call your pediatrician.',
+    source: S.aapEnough,
+  },
+  {
+    id: 'prenatal-prep',
+    category: 'Breastfeeding',
+    question: 'Can I prepare for breastfeeding before the baby arrives?',
+    answer:
+      'Yes. Before birth you can learn what a deep latch looks like (baby takes in the areola, not just the nipple) and get familiar with feeding positions, so it feels less new once baby arrives.',
+    source: S.owhChallenges,
+  },
+  {
+    id: 'engorgement',
+    category: 'Breastfeeding',
+    question: 'My breasts are hard and painful — what do I do?',
+    answer:
+      'That’s often engorgement (milk building up), common around days 3–5. Breastfeed often, hand express or pump just enough to soften before latching, use cold compresses between feeds, and wear a supportive (not tight) bra. If it’s not improving or you get a fever, call your provider.',
+    source: S.owhChallenges,
+  },
+  {
+    id: 'when-call',
+    category: 'Red flags',
+    question: 'When should breastfeeding pain make me call someone?',
+    answer:
+      'Pain plus a fever or flu-like feeling, or a breast that feels warm/hot, can mean mastitis (a breast infection) — ask for help if you don’t feel better within 24 hours, and seek care right away if it comes on suddenly, both breasts are affected, or there’s pus or blood in your milk. Cracked nipples that aren’t improving also warrant a call.',
+    source: S.owhChallenges,
+  },
 ]
 
-// "Call your provider" guidance. These map to OB triage/decision-threshold
-// references — populate from ACOG patient-facing materials. Until sourced,
-// each entry shows the topic with a pending badge; do NOT display unsourced
-// thresholds as if they were clinical advice.
+// "Call your provider" guidance. Pregnancy items are the CDC HEAR HER urgent
+// maternal warning signs (verbatim-grounded); breastfeeding items from OWH/AAP.
 export const redFlags = {
   pregnancy: [
-    { topic: 'Vaginal bleeding', detail: null, source: null },
-    { topic: 'Severe or persistent headache / vision changes / swelling', detail: null, source: null },
-    { topic: 'Decreased fetal movement', detail: null, source: null },
-    { topic: 'Leaking fluid / suspected water breaking', detail: null, source: null },
+    {
+      topic: 'Vaginal bleeding',
+      detail: 'Any bleeding from your vagina that is more than spotting during pregnancy.',
+      source: S.cdcHearHer,
+    },
+    {
+      topic: 'Severe or persistent headache / vision changes / swelling',
+      detail:
+        "A headache that won't go away or feels like the worst of your life; vision changes like blurriness, flashes of light, or seeing spots; or swelling of the face/hands.",
+      source: S.cdcHearHer,
+    },
+    {
+      topic: 'Decreased fetal movement',
+      detail: 'Your baby has stopped moving, or is moving less than before.',
+      source: S.cdcHearHer,
+    },
+    {
+      topic: 'Leaking fluid / suspected water breaking',
+      detail: 'Fluid leaking from your vagina during pregnancy.',
+      source: S.cdcHearHer,
+    },
+    {
+      topic: "Severe belly pain that doesn't go away",
+      detail: "Sharp, stabbing, or cramp-like belly pain that doesn't go away.",
+      source: S.cdcHearHer,
+    },
+    {
+      topic: 'Trouble breathing or chest pain',
+      detail:
+        'Sudden shortness of breath, trouble breathing lying flat, tightness/pressure in the center of your chest, or a fast/pounding heartbeat.',
+      source: S.cdcHearHer,
+    },
+    {
+      topic: 'Fever',
+      detail: 'A temperature of 100.4°F (38°C) or higher.',
+      source: S.cdcHearHer,
+    },
+    {
+      topic: 'Thoughts of harming yourself or your baby',
+      detail: 'Thoughts about harming yourself or your baby — seek help right away.',
+      source: S.cdcHearHer,
+    },
+    {
+      topic: 'Heavy bleeding after birth',
+      detail: 'Soaking through one or more pads in an hour, or passing clots bigger than an egg.',
+      source: S.cdcHearHer,
+    },
     { topic: 'Regular contractions before term', detail: null, source: null },
-    { topic: 'Fever', detail: null, source: null },
   ],
   breastfeeding: [
-    { topic: 'Breast redness + fever / flu-like feeling (possible mastitis)', detail: null, source: null },
-    { topic: 'Baby not making enough wet diapers', detail: null, source: null },
-    { topic: 'Cracked / bleeding nipples not improving', detail: null, source: null },
+    {
+      topic: 'Breast redness + fever / flu-like feeling (possible mastitis)',
+      detail:
+        'Soreness or a lump with fever and/or flu-like symptoms, and a breast that feels warm or hot, can be mastitis. Ask your doctor for help if you don’t feel better within 24 hours, and see a doctor right away if it’s sudden/severe, both breasts are affected, or there’s pus or blood in your milk or red streaks.',
+      source: S.owhChallenges,
+    },
+    {
+      topic: 'Baby not making enough wet diapers',
+      detail:
+        'Fewer than 6 wet diapers a day after the first week, very dark urine, or few/no stools can mean baby isn’t getting enough milk — call your pediatrician.',
+      source: S.aapEnough,
+    },
+    {
+      topic: 'Cracked / bleeding nipples not improving',
+      detail:
+        'Some early tenderness is normal, but cracked or bleeding nipples that aren’t improving usually mean the latch needs adjusting — check in with your provider or a lactation consultant.',
+      source: S.owhChallenges,
+    },
   ],
 }
 
