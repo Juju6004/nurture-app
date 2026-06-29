@@ -49,6 +49,26 @@ const S = {
     year: 2024,
     url: 'https://www.cdc.gov/hearher/maternal-warning-signs/index.html',
   },
+  owhPrenatalTests: {
+    name: "Office on Women's Health — Prenatal care and tests",
+    year: 2025,
+    url: 'https://womenshealth.gov/pregnancy/youre-pregnant-now-what/prenatal-care-and-tests',
+  },
+  owhRecovery: {
+    name: "Office on Women's Health — Recovering from birth",
+    year: 2025,
+    url: 'https://womenshealth.gov/pregnancy/childbirth-and-beyond/recovering-birth',
+  },
+  mlpLabor: {
+    name: 'MedlinePlus — Am I in labor?',
+    year: 2024,
+    url: 'https://medlineplus.gov/ency/patientinstructions/000508.htm',
+  },
+  mlpPreterm: {
+    name: 'MedlinePlus — Preterm labor',
+    year: 2024,
+    url: 'https://medlineplus.gov/ency/patientinstructions/000486.htm',
+  },
 }
 
 // Stage-based content. `minWeek`/`maxWeek` are inclusive gestational-week
@@ -101,8 +121,9 @@ export const stages = [
       },
       {
         topic: 'Appointments/screens that cluster in this window',
-        detail: null,
-        source: null,
+        detail:
+          'This is when the big screens cluster: a detailed anatomy ultrasound around 18–20 weeks, the maternal serum (quad) screen around 15–20 weeks, and glucose screening for gestational diabetes around 26–28 weeks.',
+        source: S.owhPrenatalTests,
       },
     ],
     lactation: [
@@ -134,7 +155,12 @@ export const stages = [
           'As the baby grows it presses on your organs, so shortness of breath and needing the bathroom more often are common late in pregnancy.',
         source: S.owhStages,
       },
-      { topic: 'Signs of labor vs. false alarms', detail: null, source: null },
+      {
+        topic: 'Signs of labor vs. false alarms',
+        detail:
+          "Real labor contractions come regularly and get closer together (about 5–10 min apart), last 30–70 seconds, get stronger, and don't stop when you rest or move. False labor (Braxton Hicks) is irregular and eases with rest. Fluid leaking or a “bloody show” can also signal labor. Call your provider for regular painful contractions every 5–10 min for an hour, or if your water breaks.",
+        source: S.mlpLabor,
+      },
     ],
     lactation: [
       {
@@ -155,8 +181,18 @@ export const stages = [
     maxWeek: 99,
     postpartum: true,
     feeling: [
-      { topic: 'Postpartum recovery — what is normal', detail: null, source: null },
-      { topic: 'Mood: baby blues vs. when to seek help', detail: null, source: null },
+      {
+        topic: 'Postpartum recovery — what is normal',
+        detail:
+          'Vaginal bleeding (lochia) is heavy and bright red at first, then lightens and tapers over a few weeks. Menstrual-like cramping is common, especially while breastfeeding, and your breasts may feel full or leak around days 3–6.',
+        source: S.owhRecovery,
+      },
+      {
+        topic: 'Mood: baby blues vs. when to seek help',
+        detail:
+          "Feeling sad, weepy, or overwhelmed for a few days after birth (the “baby blues”) is normal and usually passes quickly. If sadness lasts more than two weeks, see your doctor — don't wait for your postpartum visit. Postpartum depression can start any time in the first year and is serious but treatable.",
+        source: S.owhRecovery,
+      },
     ],
     lactation: [
       {
@@ -290,7 +326,12 @@ export const redFlags = {
       detail: 'Soaking through one or more pads in an hour, or passing clots bigger than an egg.',
       source: S.cdcHearHer,
     },
-    { topic: 'Regular contractions before term', detail: null, source: null },
+    {
+      topic: 'Regular contractions before term',
+      detail:
+        'Before 37 weeks, call your provider right away for more than 5 contractions an hour or regular painful contractions, contractions that get longer/stronger/closer together, low backache or pelvic/groin pressure, a sudden increase or change in vaginal discharge, or fluid or bright-red bleeding from your vagina.',
+      source: S.mlpPreterm,
+    },
   ],
   breastfeeding: [
     {
