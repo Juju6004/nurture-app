@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { visitTypes, visitFields, visitTypeForWeek } from '../data/content.js'
+import SectionCard from './SectionCard.jsx'
 
 // Digital version of the Caring for Motherhood visit pages. Mom logs each
 // appointment + the questions she wants to ask; everything saves on her phone.
@@ -64,15 +65,12 @@ export default function VisitJournal({ gestation, postpartum }) {
   }
 
   return (
-    <section className="rounded-2xl bg-white/70 p-5 ring-1 ring-stone-100">
-      <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-800">
-        <span aria-hidden>🗓️</span> My visits
-      </h2>
-      <p className="mt-1 text-sm text-stone-500">
-        Keep a record of each appointment and the questions you want to ask — it’s all
-        saved here on your phone.
-      </p>
-
+    <SectionCard
+      accent="violet"
+      icon="🗓️"
+      title="My visits"
+      subtitle="Keep a record of each appointment and the questions you want to ask — it’s all saved here on your phone."
+    >
       {/* Saved visits */}
       {visits.length > 0 && (
         <ul className="mt-4 space-y-3">
@@ -98,7 +96,7 @@ export default function VisitJournal({ gestation, postpartum }) {
           ＋ Add a visit
         </button>
       )}
-    </section>
+    </SectionCard>
   )
 }
 

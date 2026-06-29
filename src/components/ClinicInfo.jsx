@@ -1,14 +1,12 @@
 import { clinic } from '../data/content.js'
+import SectionCard from './SectionCard.jsx'
 
 // Office contact card. Shows the clinic, the office number, and hours — not a
 // promise of round-the-clock access to a specific person.
 export default function ClinicInfo() {
   return (
-    <section className="rounded-2xl bg-white/70 p-5 ring-1 ring-stone-100">
-      <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-800">
-        <span aria-hidden>☎️</span> Lactation support
-      </h2>
-      <p className="mt-1 text-sm text-stone-600">{clinic.name}</p>
+    <SectionCard accent="leaf" icon="☎️" title="Lactation support">
+      <p className="text-sm font-medium text-stone-700">{clinic.name}</p>
       <p className="mt-2 text-sm leading-relaxed text-stone-600">{clinic.blurb}</p>
 
       <dl className="mt-4 space-y-2 text-sm">
@@ -36,6 +34,6 @@ export default function ClinicInfo() {
       </dl>
 
       <p className="mt-3 text-xs text-stone-400">{clinic.coverageNote}</p>
-    </section>
+    </SectionCard>
   )
 }

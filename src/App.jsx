@@ -6,6 +6,8 @@ import Faqs from './components/Faqs.jsx'
 import FeedingPlan from './components/FeedingPlan.jsx'
 import ClinicInfo from './components/ClinicInfo.jsx'
 import VisitJournal from './components/VisitJournal.jsx'
+import SectionCard from './components/SectionCard.jsx'
+import { BloomMark, Wordmark } from './components/Logo.jsx'
 import { stageForWeek, approvedSources } from './data/content.js'
 import { trimesterLabel, weeksToGo } from './lib/pregnancy.js'
 
@@ -14,13 +16,18 @@ export default function App() {
   const [postpartum, setPostpartum] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-rose-50 via-amber-50/40 to-white text-stone-800">
-      <div className="mx-auto max-w-2xl px-4 pb-16 pt-8">
-        <header className="mb-6 text-center">
-          <h1 className="text-3xl font-semibold tracking-tight text-rose-700">Nurture</h1>
-          <p className="mt-1 text-sm text-stone-500">
-            Your pregnancy &amp; lactation companion — what to feel, how to prepare to feed,
-            and when to call.
+    <div className="min-h-screen bg-gradient-to-b from-[#fdeef2] via-[#fffaf4] to-[#fff6ee] text-stone-700">
+      <div className="mx-auto max-w-md px-4 pb-16 pt-9">
+        <header className="mb-7 text-center">
+          <div className="flex justify-center">
+            <Wordmark size={42} />
+          </div>
+          <p className="font-hand mt-1 text-xl text-[var(--bloom)]">
+            for this journey called motherhood
+          </p>
+          <p className="mt-2 text-sm text-stone-500">
+            What to feel, how to prepare to feed, and when to call — for where you are right
+            now.
           </p>
         </header>
 
@@ -40,7 +47,7 @@ export default function App() {
           />
         )}
 
-        <footer className="mt-10 border-t border-stone-200 pt-4 text-center text-xs text-stone-400">
+        <footer className="mt-10 border-t border-rose-100 pt-5 text-center text-xs text-stone-400">
           <p>
             Educational companion only — not medical advice, and not a substitute for your
             care team.
@@ -57,25 +64,29 @@ function Dashboard({ gestation, postpartum, setPostpartum, onReset }) {
 
   return (
     <div className="space-y-5">
-      {/* Week summary card */}
-      <section className="rounded-2xl bg-gradient-to-br from-rose-500 to-rose-400 p-5 text-white shadow-sm">
-        <div className="flex items-start justify-between">
+      {/* Week summary hero card */}
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#c64f7b] via-[#d2638a] to-[#e98aae] p-6 text-white shadow-lg shadow-rose-200">
+        <BloomMark
+          size={150}
+          className="pointer-events-none absolute -right-6 -top-8 opacity-20"
+        />
+        <div className="relative flex items-start justify-between">
           <div>
-            <p className="text-sm text-rose-100">
+            <p className="text-sm font-medium text-rose-50/90">
               {postpartum ? 'Postpartum' : trimesterLabel(gestation.trimester)}
             </p>
-            <p className="mt-1 text-3xl font-semibold">
+            <p className="font-display mt-1 text-4xl font-semibold">
               {postpartum ? 'Newborn feeding' : `Week ${gestation.weeks}`}
             </p>
             {!postpartum && (
-              <p className="mt-1 text-sm text-rose-100">
+              <p className="mt-1 text-sm text-rose-50/90">
                 {gestation.label} · about {weeksToGo(gestation.weeks)} weeks to go
               </p>
             )}
           </div>
           <button
             onClick={onReset}
-            className="rounded-full bg-white/20 px-3 py-1 text-xs hover:bg-white/30"
+            className="relative rounded-full bg-white/20 px-3 py-1 text-xs font-medium backdrop-blur hover:bg-white/30"
           >
             change
           </button>
@@ -83,37 +94,38 @@ function Dashboard({ gestation, postpartum, setPostpartum, onReset }) {
 
         <button
           onClick={() => setPostpartum((p) => !p)}
-          className="mt-4 rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium hover:bg-white/25"
+          className="relative mt-5 rounded-full bg-white/15 px-4 py-2 text-xs font-semibold backdrop-blur transition hover:bg-white/25"
         >
           {postpartum ? '← Back to pregnancy view' : 'Baby already here? Switch to feeding →'}
         </button>
       </section>
 
       {/* What you may be feeling */}
-      <section className="rounded-2xl bg-white/70 p-5 ring-1 ring-stone-100">
-        <h2 className="text-lg font-semibold text-stone-800">
-          {postpartum ? 'How you may be feeling' : 'What you may be feeling'}
-        </h2>
-        <p className="mt-0.5 text-sm text-stone-500">{stage.title}</p>
-        <ul className="mt-3 space-y-2">
+      <SectionCard
+        accent="rose"
+        icon="💗"
+        title={postpartum ? 'How you may be feeling' : 'What you may be feeling'}
+        subtitle={stage.title}
+      >
+        <ul className="space-y-2">
           {stage.feeling.map((item) => (
             <ContentItem key={item.topic} item={item} />
           ))}
         </ul>
-      </section>
+      </SectionCard>
 
       {/* Lactation / feeding prep — the core track */}
-      <section className="rounded-2xl bg-white/70 p-5 ring-1 ring-stone-100">
-        <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-800">
-          <span aria-hidden>🤱</span>
-          {postpartum ? 'Feeding your baby' : 'Getting ready to breastfeed'}
-        </h2>
-        <ul className="mt-3 space-y-2">
+      <SectionCard
+        accent="amber"
+        icon="🤱"
+        title={postpartum ? 'Feeding your baby' : 'Getting ready to breastfeed'}
+      >
+        <ul className="space-y-2">
           {stage.lactation.map((item) => (
             <ContentItem key={item.topic} item={item} />
           ))}
         </ul>
-      </section>
+      </SectionCard>
 
       <VisitJournal gestation={gestation} postpartum={postpartum} />
       <FeedingPlan />

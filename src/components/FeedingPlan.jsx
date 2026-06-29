@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import SectionCard from './SectionCard.jsx'
 
 // "My feeding plan" — a simple plan + if-it-gets-hard plan, saved on the
 // phone (localStorage). The point is that mom thinks it through ahead of time
@@ -56,15 +57,13 @@ export default function FeedingPlan() {
   const hasContent = FIELDS.some((f) => plan[f.key].trim())
 
   return (
-    <section className="rounded-2xl bg-white/70 p-5 ring-1 ring-stone-100">
-      <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-800">
-        <span aria-hidden>📝</span> My feeding plan
-      </h2>
-      <p className="mt-1 text-sm text-stone-500">
-        Write it in your own words now, so it’s here when you need it later.
-      </p>
-
-      <div className="mt-4 space-y-4">
+    <SectionCard
+      accent="teal"
+      icon="📝"
+      title="My feeding plan"
+      subtitle="Write it in your own words now, so it’s here when you need it later."
+    >
+      <div className="space-y-4">
         {FIELDS.map((f) => (
           <label key={f.key} className="block text-sm font-medium text-stone-700">
             {f.label}
@@ -93,6 +92,6 @@ export default function FeedingPlan() {
       <p className="mt-3 text-xs text-stone-400">
         Saved only on this phone — just for you.
       </p>
-    </section>
+    </SectionCard>
   )
 }

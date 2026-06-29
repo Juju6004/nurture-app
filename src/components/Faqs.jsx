@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { faqs } from '../data/content.js'
+import SectionCard from './SectionCard.jsx'
 
 export default function Faqs() {
   const [query, setQuery] = useState('')
@@ -8,14 +9,13 @@ export default function Faqs() {
   )
 
   return (
-    <section className="rounded-2xl bg-white/70 p-5 ring-1 ring-stone-100">
-      <h2 className="text-lg font-semibold text-stone-800">Lactation FAQs</h2>
+    <SectionCard accent="rose" icon="❓" title="Lactation FAQs">
       <input
         type="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search questions…"
-        className="mt-3 w-full rounded-xl border border-stone-200 bg-white px-3 py-2 text-stone-800 outline-none focus:border-rose-400"
+        className="w-full rounded-xl border border-rose-100 bg-white px-3 py-2 text-stone-800 outline-none focus:border-rose-400"
       />
       <ul className="mt-3 space-y-2">
         {filtered.map((f) => (
@@ -25,7 +25,7 @@ export default function Faqs() {
           <li className="py-4 text-center text-sm text-stone-400">No questions match.</li>
         )}
       </ul>
-    </section>
+    </SectionCard>
   )
 }
 

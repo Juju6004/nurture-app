@@ -20,7 +20,7 @@ export default function DueDateInput({ onResolve }) {
   }
 
   return (
-    <form onSubmit={submit} className="rounded-2xl bg-white/70 p-5 shadow-sm ring-1 ring-rose-100">
+    <form onSubmit={submit} className="section-card">
       <div className="mb-3 flex gap-2 text-sm">
         <TabButton active={mode === 'dueDate'} onClick={() => setMode('dueDate')}>
           I know my due date
