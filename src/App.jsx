@@ -9,8 +9,9 @@ import Resources from './components/Resources.jsx'
 import VisitJournal from './components/VisitJournal.jsx'
 import CaringSections from './components/CaringSections.jsx'
 import SectionCard from './components/SectionCard.jsx'
+import Tip from './components/Tip.jsx'
 import { BloomMark, Wordmark } from './components/Logo.jsx'
-import { stageForWeek, approvedSources } from './data/content.js'
+import { stageForWeek, approvedSources, visitTypeForWeek } from './data/content.js'
 import { trimesterLabel, weeksToGo } from './lib/pregnancy.js'
 
 const TABS = [
@@ -63,52 +64,62 @@ export default function App() {
         </div>
       </header>
 
-      {/* Tab content */}
+      {/* Tab content — keyed so it gently fades on tab change */}
       <main className="mx-auto w-full max-w-md px-4 pb-28 pt-5">
-        {tab === 'today' && (
-          <Today
-            gestation={gestation}
-            postpartum={postpartum}
-            setPostpartum={setPostpartum}
-            onReset={() => setGestation(null)}
-          />
-        )}
-        {tab === 'caring' && <CaringSections />}
-        {tab === 'visits' && (
-          <div className="space-y-5">
-            <VisitJournal gestation={gestation} postpartum={postpartum} />
-            <FeedingPlan />
-          </div>
-        )}
-        {tab === 'support' && (
-          <div className="space-y-5">
-            <ClinicInfo />
-            <Resources />
-            <Faqs />
-            <RedFlags />
-            <Disclaimer />
-          </div>
-        )}
+        <div key={tab} className="animate-fade-in">
+          {tab === 'today' && (
+            <Today
+              gestation={gestation}
+              postpartum={postpartum}
+              setPostpartum={setPostpartum}
+              onReset={() => setGestation(null)}
+            />
+          )}
+          {tab === 'caring' && <CaringSections />}
+          {tab === 'visits' && (
+            <div className="space-y-5">
+              <VisitJournal gestation={gestation} postpartum={postpartum} />
+              <FeedingPlan />
+            </div>
+          )}
+          {tab === 'support' && (
+            <div className="space-y-5">
+              <ClinicInfo />
+              <Resources />
+              <Faqs />
+              <RedFlags />
+              <Disclaimer />
+            </div>
+          )}
+        </div>
       </main>
 
       {/* Bottom tab bar */}
       <nav className="fixed inset-x-0 bottom-0 z-10 border-t border-rose-100 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-md">
-          {TABS.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id)}
-              className={
-                'flex flex-1 flex-col items-center gap-0.5 py-2.5 text-xs font-medium transition ' +
-                (tab === t.id ? 'text-[var(--bloom)]' : 'text-stone-400 hover:text-stone-600')
-              }
-            >
-              <span className="text-lg" aria-hidden>
-                {t.icon}
-              </span>
-              {t.label}
-            </button>
-          ))}
+        <div className="mx-auto flex max-w-md justify-around px-2 py-1.5">
+          {TABS.map((t) => {
+            const active = tab === t.id
+            return (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={
+                  'flex flex-1 flex-col items-center gap-0.5 rounded-2xl py-1.5 text-xs font-semibold transition ' +
+                  (active
+                    ? 'bg-rose-50 text-[var(--bloom)]'
+                    : 'text-stone-400 hover:text-stone-600')
+                }
+              >
+                <span
+                  className={'text-lg transition-transform ' + (active ? 'scale-110' : '')}
+                  aria-hidden
+                >
+                  {t.icon}
+                </span>
+                {t.label}
+              </button>
+            )
+          })}
         </div>
       </nav>
     </div>
@@ -121,8 +132,8 @@ function Hero() {
       <div className="flex justify-center">
         <Wordmark size={42} />
       </div>
-      <p className="font-hand mt-1 text-xl text-[var(--bloom)]">
-        for this journey called motherhood
+      <p className="font-hand mt-1 text-2xl text-[var(--bloom)]">
+        dear mom — for this journey called motherhood
       </p>
       <p className="mt-2 text-sm text-stone-500">
         What to feel, how to prepare to feed, and when to call — for where you are right now.
@@ -133,6 +144,7 @@ function Hero() {
 
 function Today({ gestation, postpartum, setPostpartum, onReset }) {
   const stage = stageForWeek(gestation.weeks, postpartum)
+  const tip = visitTypeForWeek(gestation.weeks, postpartum)?.tip
 
   return (
     <div className="space-y-5">
@@ -171,6 +183,8 @@ function Today({ gestation, postpartum, setPostpartum, onReset }) {
           {postpartum ? '← Back to pregnancy view' : 'Baby already here? Switch to feeding →'}
         </button>
       </section>
+
+      {tip && <Tip>{tip}</Tip>}
 
       {/* What you may be feeling */}
       <SectionCard

@@ -48,3 +48,43 @@ body {
   height: 0.375rem;
   border-radius: 9999px;
 }
+
+/* Gentle entrance for tab content + cards */
+@keyframes nurture-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-in {
+  animation: nurture-fade-in 0.3s ease-out both;
+}
+
+/* Warm text selection + smooth in-app scrolling */
+::selection {
+  background: #f7d4e0;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+/* Friendly tip speech-bubble — echoes the book's doctor tips */
+.tip-bubble {
+  position: relative;
+  border-radius: 1rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.tip-bubble::after {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  bottom: -0.45rem;
+  width: 0;
+  height: 0;
+  border-left: 0.55rem solid transparent;
+  border-top: 0.55rem solid rgb(255 241 245);
+}
