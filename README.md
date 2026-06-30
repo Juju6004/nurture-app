@@ -1,6 +1,7 @@
 # Nurture — Pregnancy & Lactation Companion
+made for OBGYN Rotation final project.
 
-A barebones pregnancy companion app, lactation-first. The user enters a due date
+A barebones pregnancy companion web app, lactation-first. The user enters a due date
 (or current week); the app resolves their gestational age and serves
 stage-appropriate content:
 
@@ -9,9 +10,6 @@ stage-appropriate content:
 - **Lactation FAQs** — searchable
 - **When to call your provider** — pregnancy + breastfeeding red flags
 - A **postpartum / newborn-feeding** view once the baby arrives
-
-Built as a rotation project (M3 OB/GYN). MVP scope — structure first, clinical
-content filled in next.
 
 ## Clinical sourcing rule
 
